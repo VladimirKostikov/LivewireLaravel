@@ -7,5 +7,6 @@
 </head>
 <body>
     <livewire:live-search />
+    <livewire:task-manager />
 </body>
 </html>
