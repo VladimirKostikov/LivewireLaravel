@@ -8,5 +8,8 @@
 <body>
     <livewire:live-search />
     <livewire:task-manager />
+    <livewire:real-time-chat />
+    <livewire:todo-list />
+
 </body>
 </html>
