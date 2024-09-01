@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Todo;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class TodoList extends Component
 {
@@ -34,6 +33,12 @@ class TodoList extends Component
         $this->newTask = '';
         $this->dueDate = null;
         $this->todos = Todo::orderBy('due_date')->get();
+        
+        // Emit event to refresh the list
+        $this->emit('todoListUpdated');
+
+        // Emit a browser event for notification
+        $this->dispatchBrowserEvent('task-added', ['task' => $this->newTask]);
     }
 
     public function toggleTask($taskId)
@@ -43,12 +48,30 @@ class TodoList extends Component
         $task->save();
 
         $this->todos = Todo::orderBy('due_date')->get();
+        
+        // Emit event to refresh the list
+        $this->emit('todoListUpdated');
+
+        // Emit a browser event for notification
+        if ($task->completed) {
+            $this->dispatchBrowserEvent('task-completed', ['task' => $task->task]);
+        }
     }
 
     public function deleteTask($taskId)
     {
         Todo::find($taskId)->delete();
         $this->todos = Todo::orderBy('due_date')->get();
+
+        // Emit event to refresh the list
+        $this->emit('todoListUpdated');
+    }
+
+    public function getListeners()
+    {
+        return [
+            'todoListUpdated' => '$refresh',
+        ];
     }
 
     public function render()

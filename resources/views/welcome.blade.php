@@ -10,6 +10,6 @@
     <livewire:task-manager />
     <livewire:real-time-chat />
     <livewire:todo-list />
-
+    <livewire:user-registration-form />
 </body>
 </html>
