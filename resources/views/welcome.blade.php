@@ -11,5 +11,6 @@
     <livewire:real-time-chat />
     <livewire:todo-list />
     <livewire:user-registration-form />
+    <livewire:post-management />
 </body>
 </html>
